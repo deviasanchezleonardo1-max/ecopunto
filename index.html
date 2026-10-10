@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (location.pathname !== '/' &&
+        !location.pathname.endsWith('/') &&
+        !/\.[^/]+$/.test(location.pathname)) {
+      location.replace(`${location.pathname}/${location.search}${location.hash}`);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b7a53">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="imagenes/icon-192.png">
+  <link rel="apple-touch-icon" href="imagenes/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="EcoPunto">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="styles.css">
+  <title>EcoPunto</title>
+</head>
+<body>
+  <div id="loadingSplash" class="loading-splash" role="status" aria-live="polite" aria-label="Cargando EcoPunto">
+    <div class="loading-glow" aria-hidden="true"></div>
+    <div class="loading-mark" aria-hidden="true">
+      <svg class="loading-orbit" viewBox="0 0 160 160">
+        <circle class="orbit-track" cx="80" cy="80" r="66"></circle>
+        <circle class="orbit-runner" cx="80" cy="80" r="66"></circle>
+      </svg>
+      <svg class="loading-leaf" viewBox="0 0 100 100">
+        <path class="logo-leaf logo-leaf-one" d="M49 75C23 68 21 42 25 23c20 3 40 12 40 34 0 11-7 18-16 18Z"></path>
+        <path class="logo-leaf logo-leaf-two" d="M50 76c1-23 17-39 39-42 3 21-6 44-27 48-5 1-9-1-12-6Z"></path>
+        <path class="logo-stem" d="M31 38c11 9 20 22 23 43m30-36C68 53 59 65 54 81"></path>
+        <circle class="logo-spark" cx="76" cy="20" r="4"></circle>
+      </svg>
+    </div>
+    <p class="loading-kicker">UN MOMENTO</p>
+    <strong>EcoPunto</strong>
+    <span class="loading-caption">Pequeñas acciones, un planeta mejor</span>
+    <div class="loading-progress" aria-hidden="true"><i></i></div>
+  </div>
+  <main id="app">
+    <aside id="ecoLion" class="eco-lion" role="img" aria-label="Leo, el león guardián del reciclaje">
+      <span class="lion-speech" aria-hidden="true">¡Tú puedes!</span>
+      <span class="lion-motion" aria-hidden="true">
+        <img class="lion-motion-frame lion-motion-current" src="imagenes/leo-natural-00.png" alt="">
+        <img class="lion-motion-frame lion-motion-next" src="imagenes/leo-natural-01.png" alt="">
+        <img class="lion-motion-frame lion-closed-eyes" src="imagenes/leo-closed-eyes.png" alt="">
+        <span class="lion-eyes">
+          <span class="lion-eye lion-eye-left"><i class="lion-pupil"></i></span>
+          <span class="lion-eye lion-eye-right"><i class="lion-pupil"></i></span>
+        </span>
+      </span>
+    </aside>
+    <section id="home" class="screen active">
+      <div class="status-bar"><span id="gamepadStatus" class="status-pill">🎮 Mando: no conectado</span><span id="wifiStatus" class="status-pill">📶 Sin conexión</span></div>
+      <div class="hero">
+        <div class="eco-orbit" aria-hidden="true">
+          <span class="orbit-sun">✦</span>
+          <span class="orbit-leaf orbit-leaf-a">🌱</span>
+          <span class="orbit-leaf orbit-leaf-b">♻️</span>
+          <span class="orbit-leaf orbit-leaf-c">✦</span>
+        </div>
+        <div class="leaf">♻️</div>
+        <p class="eyebrow">APRENDE · CLASIFICA · GANA</p>
+        <h1>EcoPunto</h1>
+        <p class="subtitle">Cada residuo bien separado cuenta.</p>
+        <div class="eco-promise" aria-label="Separar, aprender y sumar puntos">
+          <span><i>01</i> Separa</span><b>✦</b><span><i>02</i> Aprende</span><b>✦</b><span><i>03</i> Suma puntos</span>
+        </div>
+        <div class="choice-grid">
+          <button class="choice" data-role="student"><span>👨‍🎓</span><b>Estudiante</b><small>Escanea y gana puntos</small></button>
+          <button class="choice" data-role="teacher"><span>👩‍🏫</span><b>Profesor</b><small>Usa la app y consulta puntos</small></button>
+          <button class="choice game-button" data-go="game"><span>🎮</span><b>Juego</b><small>Próximamente</small></button>
+        </div>
+        <button id="homeProfileButton" class="secondary profile-menu-button" type="button" hidden>👤 Ver mi perfil</button>
+        <button id="installAppButton" class="primary" type="button">Instalar EcoPunto</button>
+        <p id="installHelp" class="notice" hidden>En Android, abre esta web en Chrome y selecciona ⋮ &gt; Instalar aplicación o Añadir a pantalla principal. En iPhone, abre la web en Safari, toca Compartir y elige Añadir a pantalla de inicio. La web debe estar publicada con HTTPS.</p>
+      </div>
+    </section>
+
+    <section id="studentAccess" class="screen">
+      <button class="back" data-go="home">← Volver</button>
+      <div class="card">
+        <p class="eyebrow">CUENTA DE ESTUDIANTE</p>
+        <h2>¿Cómo quieres continuar?</h2>
+        <button id="createAccount" class="primary" type="button">Crear cuenta</button>
+        <button id="loginAccount" class="secondary" type="button">Ya tengo cuenta</button>
+        <button id="useLocalProfile" class="secondary" type="button" hidden>Usar perfil guardado en este dispositivo</button>
+      </div>
+    </section>
+
+    <section id="register" class="screen">
+      <button class="back" data-go="studentAccess">← Volver</button>
+      <div class="card">
+        <p class="eyebrow">NUEVA CUENTA</p>
+        <h2>¿Quién va a usar la app?</h2>
+        <p class="notice">Ingresa estos datos para crear tu cuenta. Te enviaremos un mensaje al correo cuando se cree y lo usarás junto con tu contraseña para entrar.</p>
+        <label>Nombre<input id="names" required autocomplete="given-name" placeholder="Escribe tu nombre"></label>
+        <label>Apellido<input id="surnames" required autocomplete="family-name" placeholder="Escribe tu apellido"></label>
+        <label>Correo electrónico<input id="studentEmail" type="email" required autocomplete="email" maxlength="254" placeholder="tu@correo.com"></label>
+        <label>Jornada
+          <select id="shift" required>
+            <option value="">Selecciona una jornada</option>
+            <option value="Mañana">Mañana</option>
+            <option value="Tarde">Tarde</option>
+          </select>
+        </label>
+        <label>Grado
+          <select id="grade" required disabled><option value="">Primero selecciona la jornada</option></select>
+        </label>
+        <label>Contraseña<div class="password-input-wrap"><input id="studentPassword" type="password" data-password-input required autocomplete="new-password" minlength="8" maxlength="128" placeholder="Mínimo 8 caracteres"><button class="password-visibility" type="button" data-password-toggle aria-controls="studentPassword" aria-label="Mantén presionado para mostrar la contraseña" title="Mantén presionado para mostrar la contraseña">👁</button></div></label>
+        <button id="saveProfile" class="primary">Continuar →</button>
+      </div>
+    </section>
+
+    <section id="accountLogin" class="screen">
+      <button class="back" data-go="studentAccess">← Volver</button>
+      <div class="card">
+        <p class="eyebrow">INICIAR SESIÓN</p>
+        <h2>Inicia sesión</h2>
+        <p class="notice">Ingresa el correo que registraste y tu contraseña.</p>
+        <label>Correo electrónico<input id="loginEmail" type="email" required autocomplete="email" maxlength="254" placeholder="tu@correo.com"></label>
+        <label>Contraseña<div class="password-input-wrap"><input id="loginStudentPassword" type="password" data-password-input required autocomplete="current-password" maxlength="128" placeholder="Tu contraseña"><button class="password-visibility" type="button" data-password-toggle aria-controls="loginStudentPassword" aria-label="Mantén presionado para mostrar la contraseña" title="Mantén presionado para mostrar la contraseña">👁</button></div></label>
+        <button id="submitAccountLogin" class="primary" type="button">Entrar</button>
+        <button id="legacyLoginToggle" class="secondary" type="button">Tengo una cuenta anterior con código</button>
+        <div id="legacyLoginFields" hidden>
+          <label>Código de estudiante<input id="loginStudentCode" autocomplete="username" maxlength="32" placeholder="Código de tu cuenta anterior"></label>
+          <button id="submitLegacyAccountLogin" class="primary" type="button">Entrar con código anterior</button>
+        </div>
+        <p id="accountStatus" class="notice" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="profiles" class="screen">
+      <div class="card">
+        <button class="back" id="profileListBack" type="button">← Volver</button>
+        <p class="eyebrow">PERFILES GUARDADOS</p>
+        <h2>¿Eres tú?</h2>
+        <div id="profileList"></div>
+        <button class="secondary" id="addProfile">+ Agregar otro perfil</button>
+        <button class="secondary" id="loginExistingAccount" type="button">Iniciar sesión con otra cuenta</button>
+      </div>
+    </section>
+
+    <section id="dashboard" class="screen">
+      <header class="topbar"><button class="back" data-go="home">←</button><b>EcoPunto</b><div class="topbar-actions"><button id="dashboardProfileButton" class="secondary" type="button">👤 Mi perfil</button><span id="pointsBadge">⭐ 0</span></div></header>
+      <div class="card welcome"><p class="eyebrow">TU PERFIL</p><h2 id="who"></h2><p id="whoMeta"></p></div>
+      <p id="accountSyncStatus" class="notice" role="status" aria-live="polite"></p>
+      <button id="scanButton" class="scan"><span>📷</span><b>Escanear residuo</b><small>La cámara se abrirá para identificarlo</small></button>
+      <div class="tip"><b>🌱 Dato ecológico</b><p>Separar correctamente permite aprovechar materiales y reduce los residuos que llegan a disposición final.</p></div>
+      <div class="card"><h3>Tu progreso</h3><div class="stats"><div><b id="totalPoints">0</b><small>Puntos</small></div><div><b id="totalScans">0</b><small>Escaneos</small></div></div></div>
+      <button id="deleteLocalAccount" class="secondary danger" type="button">Quitar cuenta de este dispositivo</button>
+    </section>
+
+    <section id="myProfile" class="screen">
+      <header class="topbar"><button class="back" data-go="dashboard">←</button><b>Mi perfil</b><span id="profileMenuPoints">⭐ 0</span></header>
+      <div class="card welcome"><p class="eyebrow">MIS DATOS</p><h2 id="profileMenuName"></h2><p id="profileMenuMeta"></p><p id="profileMenuCode"></p></div>
+      <div class="card"><h3>Mi progreso</h3><div class="stats"><div><b id="profileMenuTotalPoints">0</b><small>Puntos</small></div><div><b id="profileMenuTotalScans">0</b><small>Escaneos</small></div></div></div>
+      <div class="card"><h3>Mis últimos escaneos</h3><div id="profileMenuHistory" class="profile-history"></div></div>
+      <button id="switchProfileButton" class="secondary" type="button">Cambiar perfil</button>
+      <button id="profileMenuDeleteButton" class="secondary danger" type="button">Quitar cuenta de este dispositivo</button>
+    </section>
+
+    <section id="scanner" class="screen">
+      <header class="topbar"><button class="back" data-go="dashboard">←</button><b>Escanear residuo</b><span></span></header>
+      <div class="camera-card">
+        <video id="camera" autoplay playsinline muted></video>
+        <div class="camera-frame"></div>
+        <p id="cameraStatus">Solicitando permiso para usar la cámara…</p>
+      </div>
+      <div id="scanResult" class="card scan-result" hidden>
+        <p class="eyebrow">RESIDUO IDENTIFICADO</p>
+        <h2 id="scanResultName"></h2>
+        <p id="scanResultInfo"></p>
+        <p>Contenedor: <b id="scanResultBin"></b></p>
+        <p>Puntos: <b id="scanResultPoints"></b></p>
+      </div>
+      <p id="modelStatus" class="notice" role="status" aria-live="polite">El modelo local se comprueba al abrir la cámara.</p>
+      <div id="aiTrainingPanel" class="card ai-training-panel">
+        <h3>Ejemplos para Teachable Machine</h3>
+        <p class="notice">Las clasificaciones de Gemini se guardan automáticamente en este dispositivo. Descárgalas y revisa las categorías antes de reentrenar; un resultado automático puede ser incorrecto.</p>
+        <p id="aiTrainingCount" class="notice" role="status" aria-live="polite">Consultando ejemplos guardados…</p>
+        <button id="exportAiExamples" class="secondary" type="button">Descargar ejemplos por categoría</button>
+      </div>
+      <button id="capture" class="primary" disabled>📷 Capturar residuo</button>
+      <p class="notice">Los puntos se asignan solo cuando una identificación válida alcanza suficiente confianza.</p>
+    </section>
+
+    <section id="game" class="screen">
+      <button class="back" data-go="home">← Volver</button>
+      <div class="card coming-soon">
+        <div class="coming-icon">🎮</div>
+        <p class="eyebrow">MODO JUEGO</p>
+        <h2>Próximamente</h2>
+        <p>Estamos preparando juegos educativos para aprender a separar residuos mientras te diviertes.</p>
+      </div>
+    </section>
+
+    <section id="teacher" class="screen">
+      <header class="topbar"><button class="back" data-go="home">←</button><b>Panel de profesor</b><span></span></header>
+      <div class="card">
+        <p class="eyebrow">ACCESO DOCENTE</p>
+        <h2>Tabla de puntos</h2>
+        <p class="notice">Esta tabla resume los perfiles guardados en este dispositivo. Los estudiantes pueden recuperar sus puntos online iniciando sesión; el informe central para profesores aún no está integrado.</p>
+        <div id="teacherTable"></div>
+      </div>
+    </section>
+
+    <div id="gamepadKeyboard" class="gamepad-keyboard" hidden aria-label="Teclado virtual para mando Xbox">
+      <div class="gamepad-keyboard-head"><b>⌨️ Teclado</b><button id="closeGamepadKeyboard" type="button">✕</button></div>
+      <div id="gamepadKeyboardTarget" class="gamepad-keyboard-target"></div>
+      <div id="gamepadKeyboardKeys" class="gamepad-keyboard-keys"></div>
+      <p class="gamepad-hint">Mayúscula: siguiente tecla · A: escribir · B: cerrar · LB/RB: cambiar campo · X: espacio · Mantén Y para mostrar contraseña (en otros campos borra) · LT/RT: borrar · Start: aceptar</p>
+    </div>
+    <div id="teacherPasswordModal" class="gamepad-choice-menu password-modal" hidden aria-label="Acceso docente">
+      <div class="gamepad-keyboard-head"><b>🔐 Clave de profesor</b><button id="closeTeacherPassword" type="button">✕</button></div>
+      <div class="password-input-wrap"><input id="teacherPasswordInput" type="password" data-password-input inputmode="numeric" autocomplete="off" placeholder="Ingresa la clave"><button class="password-visibility" type="button" data-password-toggle aria-controls="teacherPasswordInput" aria-label="Mantén presionado para mostrar la clave" title="Mantén presionado para mostrar la clave">👁</button></div>
+      <button id="teacherPasswordEnter" class="primary" type="button">Entrar</button>
+      <p id="teacherPasswordHint" class="gamepad-hint">Con mando conectado se usa el teclado virtual.</p>
+    </div>
+    <div id="gamepadChoiceMenu" class="gamepad-choice-menu" hidden aria-label="Opciones del formulario">
+      <div class="gamepad-keyboard-head"><b id="gamepadChoiceTitle"></b><button id="closeGamepadChoices" type="button" aria-label="Cerrar">✕</button></div>
+      <div id="gamepadChoiceOptions" class="gamepad-choice-options"></div>
+      <p class="gamepad-hint">A: seleccionar · B: salir</p>
+    </div>
+    <div id="actionDialog" class="gamepad-choice-menu action-dialog" role="dialog" aria-modal="true" aria-labelledby="actionDialogTitle" hidden>
+      <div class="gamepad-keyboard-head"><b id="actionDialogTitle">EcoPunto</b></div>
+      <p id="actionDialogMessage"></p>
+      <div class="action-dialog-buttons">
+        <button id="actionDialogCancel" class="secondary" type="button">Cancelar</button>
+        <button id="actionDialogConfirm" class="primary" type="button">Aceptar</button>
+      </div>
+      <p class="gamepad-hint">A: aceptar · B: cancelar</p>
+    </div>
+  </main>
+  <script src="app.js" defer></script>
+</body>
+</html>
